@@ -20,7 +20,7 @@ mkdir $EST_BASEDIR/csr_req
 dd if=/dev/urandom of=$CA_BASEDIR/.rnd bs=256 count=1  bs=256 count=1
 
 #Create cacert
-openssl req -x509 -config  $CA_BASEDIR/conf/openssl-ca.cnf -newkey rsa:4096 -sha256 -keyout $CA_BASEDIR/cakey.pem -nodes -out $CA_BASEDIR/cacert.pem -outform PEM
+openssl req -x509 -days 18250 -config  $CA_BASEDIR/conf/openssl-ca.cnf -newkey rsa:4096 -sha256 -keyout $CA_BASEDIR/cakey.pem -nodes -out $CA_BASEDIR/cacert.pem -outform PEM
 
 #and base64 encode it
 cp $CA_BASEDIR/cacert.pem $EST_BASEDIR/certs/
