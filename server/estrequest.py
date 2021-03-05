@@ -72,6 +72,7 @@ class EstRequestHandler(BaseHTTPRequestHandler):
         file = open("./certs/cacert.p7b", "r")
         ca_certs = file.read()
 
+        cacerts = cacerts.split('BEGIN PKCS7-----\n')[1].split('-----END PKCS7')[0]
         self.set_est_rsp_header(len(ca_certs))
 
         self.wfile.write(ca_certs.encode('utf-8'))
@@ -85,6 +86,7 @@ class EstRequestHandler(BaseHTTPRequestHandler):
 
         cert = sign_certificate(csr)
 
+        cert = cert.split('BEGIN PKCS7-----\n')[1].split('-----END PKCS7')[0]
         self.set_est_rsp_header(len(cert))
 
         self.wfile.write(cert.encode('utf-8'))
@@ -114,8 +116,14 @@ def sign_certificate(csr):
     """
     unique_filename = str(uuid.uuid4().hex)
 
+    csr = csr.decode("utf-8")
     file = open("./csr_req/%s.csr" % unique_filename, "w")
-    file.write(csr.decode("utf-8"))
+    if "BEGIN CERTIFICATE REQUEST" in csr:
+        file.write(csr)
+    else:
+        file.write("-----BEGIN CERTIFICATE REQUEST-----\n")
+        file.write(csr)
+        file.write("-----END CERTIFICATE REQUEST-----")
     file.close()
 
     subprocess.run(["../ca/scripts/sign.sh", unique_filename], check=False)
