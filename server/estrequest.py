@@ -72,7 +72,7 @@ class EstRequestHandler(BaseHTTPRequestHandler):
         file = open("./certs/cacert.p7b", "r")
         ca_certs = file.read()
 
-        cacerts = cacerts.split('BEGIN PKCS7-----\n')[1].split('-----END PKCS7')[0]
+        ca_certs = ca_certs.split('BEGIN PKCS7-----\n')[1].split('-----END PKCS7')[0]
         self.set_est_rsp_header(len(ca_certs))
 
         self.wfile.write(ca_certs.encode('utf-8'))
