@@ -10,6 +10,8 @@ EST server URI path begins with"https://www.example.com/.well-known/est".  Each 
 |Enrollment of clients|/simpleenroll| [RFC7030 section 4.2](https://tools.ietf.org/html/rfc7030#section-4.2)|
 |Re-enrollment of clients|/simplereenroll |[RFC7030 section 4.2.2](https://tools.ietf.org/html/rfc7030#section-4.2.2)|   
 
+## Changes
+- Added compatibility with Aruba devices
 
 ## Motivation
 - Study [RFC7030][51b5b8ee] and understand how EST works.
